@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Bokning Bekräftad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            background: rgba(0,0,0,0.7);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 { margin-bottom: 20px; }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: #1fa2ff;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        a:hover { background-color: #12d8fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tack, {{ name }}!</h1>
+        <p>Din bokning är bekräftad: {{ date }} kl {{ time }}</p>
+        <p>Missa inte din tid!</p>
+        <a href="/index">Tillbaka till bokningssidan</a>
+    </div>
+</body>
+</html>

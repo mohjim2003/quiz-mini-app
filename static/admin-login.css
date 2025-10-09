@@ -1,0 +1,235 @@
+/* ===========================
+   Global Styles
+=========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    line-height: 1.6;
+    color: #fff;
+}
+
+/* ===========================
+   Container
+=========================== */
+.login-container,
+.container {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(0,0,0,0.6);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+/* ===========================
+   Headers
+=========================== */
+h1.title {
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 5px #000;
+}
+
+h2 {
+    margin: 20px 0 10px;
+    font-size: 1.5em;
+}
+
+/* ===========================
+   Neumorphic Card
+=========================== */
+.login-card {
+    background: #e0e5ec;
+    border-radius: 30px;
+    padding: 50px 40px;
+    box-shadow: 20px 20px 60px #bec3cf, -20px -20px 60px #ffffff;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.login-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ===========================
+   Login Header & Icon
+=========================== */
+.login-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.neu-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    background: #e0e5ec;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 8px 8px 20px #bec3cf, -8px -8px 20px #ffffff;
+    transition: all 0.3s ease;
+}
+
+.neu-icon:hover {
+    box-shadow: 4px 4px 10px #bec3cf, -4px -4px 10px #ffffff;
+}
+
+.login-header h2 {
+    color: #3d4468;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.login-header p {
+    color: #9499b7;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/* ===========================
+   Form Inputs
+=========================== */
+input[type="email"],
+input[type="password"] {
+    width: 80%;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1em;
+    outline: none;
+}
+
+.neu-input {
+    position: relative;
+    background: #e0e5ec;
+    border-radius: 15px;
+    box-shadow: inset 8px 8px 16px #bec3cf, inset -8px -8px 16px #ffffff;
+    transition: all 0.3s ease;
+}
+
+.neu-input:focus-within {
+    box-shadow: inset 4px 4px 8px #bec3cf, inset -4px -4px 8px #ffffff;
+}
+
+.neu-input input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 20px 24px;
+    padding-left: 55px;
+    color: #3d4468;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.neu-input label {
+    position: absolute;
+    left: 55px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9499b7;
+    font-size: 16px;
+    font-weight: 400;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.neu-input input:focus + label,
+.neu-input input:not(:placeholder-shown) + label {
+    top: 8px;
+    font-size: 12px;
+    color: #6c7293;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+.btn,
+.neu-button {
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: 0.3s ease;
+    padding: 12px 25px;
+}
+
+.admin-btn {
+    background: #ff416c;
+    color: #fff;
+}
+
+.admin-btn:hover {
+    background: #ff4b2b;
+}
+
+.customer-btn {
+    background: #1fa2ff;
+    color: #fff;
+}
+
+.customer-btn:hover {
+    background: #12d8fa;
+}
+
+.neu-button {
+    width: 100%;
+    background: #e0e5ec;
+    border-radius: 15px;
+    padding: 18px 32px;
+    color: #3d4468;
+    margin-bottom: 30px;
+    box-shadow: 8px 8px 20px #bec3cf, -8px -8px 20px #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.neu-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 12px 12px 30px #bec3cf, -12px -12px 30px #ffffff;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+@media (max-width: 480px) {
+    body {
+        padding: 16px;
+    }
+
+    .login-card,
+    .login-container {
+        padding: 35px 25px;
+        border-radius: 20px;
+    }
+
+    .login-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .neu-input input {
+        padding: 18px 20px;
+        padding-left: 50px;
+    }
+
+    .neu-input label {
+        left: 50px;
+    }
+}

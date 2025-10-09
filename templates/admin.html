@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(255,255,255,0.2);
+            font-size: 1.1em;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        tr:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .delete-btn {
+            background: #ff416c;
+            color: #fff;
+        }
+
+        .delete-btn:hover {
+            background: #ff4b2b;
+        }
+
+        .back-btn {
+            background: #1fa2ff;
+            color: #fff;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: #12d8fa;
+        }
+
+        .add-btn {
+            background: #00c851;
+            color: #fff;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .add-btn:hover {
+            background: #007e33;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            color: #333;
+            margin: 15% auto;
+            padding: 25px;
+            border-radius: 15px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal button {
+            margin: 10px 5px 0 5px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .confirm-delete {
+            background-color: #ff416c;
+            color: #fff;
+        }
+
+        .confirm-delete:hover {
+            background-color: #ff4b2b;
+        }
+
+        .cancel-delete {
+            background-color: #1fa2ff;
+            color: #fff;
+        }
+
+        .cancel-delete:hover {
+            background-color: #12d8fa;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Panel</h1>
+
+        <!-- Bokningar -->
+        <h2>Alla Bokningar</h2>
+        {% if bookings %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Namn</th>
+                <th>Datum</th>
+                <th>Tid</th>
+                <th>Åtgärder</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.name }}</td>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.time }}</td>
+                <td>
+                    <button class="delete-btn" onclick="showModal({{ booking.id }})">Ta bort</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>Inga bokningar.</p>
+        {% endif %}
+
+        <hr style="margin:40px 0; border-color: rgba(255,255,255,0.2);">
+
+        <!-- Tillgängligheter -->
+        <h2>Tillgängliga tider</h2>
+        {% if availabilities %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Datum</th>
+                <th>Tid</th>
+                <th>Status</th>
+                <th>Åtgärder</th>
+            </tr>
+            {% for slot in availabilities %}
+            <tr>
+                <td>{{ slot.id }}</td>
+                <td>{{ slot.date }}</td>
+                <td>{{ slot.time }}</td>
+                <td>{{ 'Bokad' if slot.is_booked else 'Ledig' }}</td>
+                <td>
+                    {% if not slot.is_booked %}
+                    <a href="/delete-availability/{{ slot.id }}"><button class="delete-btn">Ta bort</button></a>
+                    {% else %}
+                    <button disabled style="opacity:0.5;cursor:not-allowed;">Bokad</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>Inga tillgängliga tider ännu.</p>
+        {% endif %}
+
+        <a href="/add-availability"><button class="add-btn">➕ Lägg till ny tillgänglighet</button></a>
+        <a href="/admin-logout"><button class="back-btn">Logga ut</button></a>
+    </div>
+
+    <!-- Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>Är du säker på att du vill ta bort bokningen?</p>
+            <button class="confirm-delete" id="confirmDeleteBtn">Ja, ta bort</button>
+            <button class="cancel-delete" onclick="closeModal()">Avbryt</button>
+        </div>
+    </div>
+
+    <script>
+        let deleteId = null;
+
+        function showModal(id) {
+            deleteId = id;
+            document.getElementById('deleteModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            deleteId = null;
+        }
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            if (deleteId !== null) {
+                window.location.href = '/delete/' + deleteId;
+            }
+        });
+    </script>
+</body>
+</html>

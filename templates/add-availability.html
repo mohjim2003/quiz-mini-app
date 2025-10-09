@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Lägg till tillgänglighet</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 400px;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-size: 1.1em;
+        }
+
+        input[type="date"],
+        input[type="time"],
+        input[type="number"] {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        button {
+            background: #00c851;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1em;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #007e33;
+        }
+
+        .back-btn {
+            display: block;
+            margin-top: 15px;
+            background: #1fa2ff;
+            text-decoration: none;
+            text-align: center;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #12d8fa;
+        }
+
+        .note {
+            font-size: 0.9em;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Lägg till ny tillgänglighet</h2>
+        <form action="/add-availability" method="POST">
+            <label for="date">Välj datum:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="start_time">Starttid:</label>
+            <input type="time" id="start_time" name="start_time" required>
+
+            <label for="end_time">Sluttid:</label>
+            <input type="time" id="end_time" name="end_time" required>
+
+            <label for="break_start">Rast start (valfritt):</label>
+            <input type="time" id="break_start" name="break_start">
+
+            <label for="break_end">Rast slut (valfritt):</label>
+            <input type="time" id="break_end" name="break_end">
+
+            <label for="slot_length">Tidslängd per slot (minuter):</label>
+            <input type="number" id="slot_length" name="slot_length" value="30" min="5" required>
+
+            <button type="submit">Spara tillgänglighet</button>
+        </form>
+
+        <a href="/admin" class="back-btn">⬅ Tillbaka till adminpanelen</a>
+        <p class="note">Tips: Systemet skapar automatiskt slots mellan start och slut och hoppar över eventuell rast.</p>
+    </div>
+</body>
+</html>

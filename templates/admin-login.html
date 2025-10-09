@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Bokningssystem Start</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin-login.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Bokningssystem</h1>
+
+        <!-- Admin login -->
+        <div class="card admin-card">
+            <h2>Admin</h2>
+            <form method="POST" action="/admin-login">
+                <input type="email" name="email" placeholder="Admin E-post" required>
+                <input type="password" name="password" placeholder="Lösenord" required>
+                <button type="submit" class="btn admin-btn">Logga in som Admin</button>
+            </form>
+        </div>
+
+        <!-- Kund knapp -->
+        <div class="card customer-card">
+            <h2>Kund</h2>
+            <a href="/index"><button class="btn customer-btn">Gå till bokning</button></a>
+        </div>
+    </div>
+</body>
+</html>

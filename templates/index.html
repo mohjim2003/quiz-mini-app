@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Boka Tid</title>
+    <style>
+        body { font-family: Arial; background: #6a11cb; color: #fff; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        h1 { margin-bottom: 20px; }
+        form, .slots { background: rgba(0,0,0,0.7); padding: 20px; border-radius: 15px; width: 400px; text-align: center; margin-bottom: 20px; }
+        input[type="date"], input[type="text"], input[type="tel"], button { padding: 10px; border-radius: 8px; border: none; margin: 5px 0; font-size: 1em; width: 90%; }
+        .slot-btn { margin: 5px; padding: 10px 15px; border-radius: 8px; border: none; background: #00c851; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .slot-btn:hover { background: #007e33; }
+        .back-btn { display: inline-block; padding: 10px 20px; background: #ff416c; color: white; border-radius: 8px; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Boka Tid</h1>
+
+    <form action="/index" method="POST">
+        <label for="date">Välj datum:</label>
+        <input type="date" id="date" name="date" required>
+        <button type="submit">Visa lediga tider</button>
+    </form>
+
+    {% if selected_date %}
+    <div class="slots">
+        <h3>Lediga tider för {{ selected_date }}</h3>
+        {% if availabilities %}
+            <form action="/book" method="POST">
+                <input type="text" name="name" placeholder="Ditt namn" required><br><br>
+                <input type="tel" name="phone" placeholder="Ditt telefonnummer" required><br><br>
+                {% for slot in availabilities %}
+                    <button type="submit" name="slot_id" value="{{ slot.id }}" class="slot-btn">{{ slot.time }}</button>
+                {% endfor %}
+            </form>
+        {% else %}
+            <p>Inga lediga tider för detta datum.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <a href="/" class="back-btn">⬅ Tillbaka till Hem</a>
+</body>
+</html>

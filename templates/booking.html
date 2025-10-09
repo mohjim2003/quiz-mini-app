@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Skapa Bokning</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='booking.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .booking-form {
+            background: rgba(0,0,0,0.7);
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+
+        .slots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .slot-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            background: #00c851;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .slot-btn:hover {
+            background: #007e33;
+        }
+
+        .slot-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            background: #1fa2ff;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            transition: 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background: #12d8fa;
+        }
+
+        .back-btn {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background: #ff416c;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #ff4b2b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Skapa Ny Bokning</h1>
+
+    <div class="booking-form">
+        <!-- Välj datum -->
+        <form method="POST" action="/index">
+            <label for="date">Välj datum:</label>
+            <input type="date" id="date" name="date" value="{{ selected_date }}" required>
+            <button type="submit">Visa lediga tider</button>
+        </form>
+
+        <!-- Visa lediga tider -->
+        {% if selected_date %}
+            <h3>Lediga tider för {{ selected_date }}</h3>
+            <form action="/book" method="POST">
+                <input type="text" name="name" placeholder="Ditt namn" required>
+                <div class="slots">
+                    {% for slot in availabilities %}
+                        <button type="submit" name="slot_id" value="{{ slot.id }}" class="slot-btn">
+                            {{ slot.time }}
+                        </button>
+                    {% endfor %}
+                    {% if not availabilities %}
+                        <p>Inga lediga tider just nu.</p>
+                    {% endif %}
+                </div>
+            </form>
+        {% endif %}
+    </div>
+
+    <a href="/" class="back-btn">⬅ Tillbaka till Hem</a>
+</body>
+</html>
